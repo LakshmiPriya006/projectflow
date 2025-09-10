@@ -1,5 +1,6 @@
 
 import React, { useState, useMemo } from 'react';
+import './../styles/FileManager.scss';
 import { Search, Filter, MoreHorizontal, Download, Share2, Eye, CheckCircle, Clock, XCircle, AlertCircle, ChevronDown, ChevronRight, FileText, Folder, Calendar, User, Tag, MessageSquare } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -162,28 +163,28 @@ export default function FileManager() {
   const getStatusBadgeColor = (status) => {
     switch (status.toLowerCase()) {
       case 'approved':
-        return 'bg-green-50 text-green-700 border-green-200';
+        return 'status-badge-approved';
       case 'draft':
-        return 'bg-orange-50 text-orange-700 border-orange-200';
+        return 'status-badge-draft';
       case 'rejected':
-        return 'bg-red-50 text-red-700 border-red-200';
+        return 'status-badge-rejected';
       case 'reviewed':
-        return 'bg-sky-50 text-sky-700 border-sky-200';
+        return 'status-badge-reviewed';
       default:
-        return 'bg-gray-50 text-gray-700 border-gray-200';
+        return 'status-badge-default';
     }
   };
 
   const getStatusIcon = (status) => {
     switch (status.toLowerCase()) {
       case 'approved':
-        return <CheckCircle className="w-3 h-3" />;
+        return <CheckCircle className="status-icon" />;
       case 'draft':
-        return <Clock className="w-3 h-3" />;
+        return <Clock className="status-icon" />;
       case 'rejected':
-        return <XCircle className="w-3 h-3" />;
+        return <XCircle className="status-icon" />;
       case 'reviewed':
-        return <Eye className="w-3 h-3" />;
+        return <Eye className="status-icon" />;
       default:
         return null;
     }
@@ -207,55 +208,55 @@ export default function FileManager() {
   const getChildFiles = (parentId) => filteredFiles.filter((file) => file.parentId === parentId);
 
   return (
-    <div className="min-h-screen bg-white border-t-4 border-gray-800">
-      <div className="max-w-screen-xl mx-auto">
+    <div className="file-manager-container">
+      <div className="file-manager-content">
         {/* Project Stepper */}
-        <div className="w-full bg-white border-b border-slate-200 px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center w-full">
+        <div className="project-stepper">
+          <div className="project-stepper-inner">
+            <div className="project-steps">
               {projectSteps.map((step, index) => (
                 <React.Fragment key={step.id}>
-                  <div className="flex items-center space-x-2">
+                  <div className="step">
                     <div
-                      className={`relative flex items-center justify-center w-5 h-5 rounded-full border transition-all duration-300 ${
+                      className={`step-icon ${
                         step.status === 'completed'
-                          ? 'bg-cyan-400 border-cyan-400 shadow-[0_0_8px_theme(colors.cyan.300)]'
+                          ? 'step-icon-completed'
                           : step.status === 'active'
-                          ? 'bg-cyan-400 border-cyan-400 shadow-[0_0_8px_theme(colors.cyan.300)]'
-                          : 'bg-white border-slate-300'
+                          ? 'step-icon-active'
+                          : 'step-icon-pending'
                       }`}
                     >
                       {step.status === 'completed' ? (
-                        <CheckCircle className="w-3 h-3 text-white" />
+                        <CheckCircle className="step-icon-check" />
                       ) : step.status !== 'active' && (
-                        <div className="w-2 h-2 rounded-full bg-slate-300"></div>
+                        <div className="step-icon-dot step-icon-dot-pending"></div>
                       )}
-                      {step.status === 'active' && <div className="w-2 h-2 rounded-full bg-white"></div>}
+                      {step.status === 'active' && <div className="step-icon-dot step-icon-dot-active"></div>}
                     </div>
                     <span
-                      className={`font-medium transition-colors duration-300 whitespace-nowrap ${
-                        step.status === 'active' ? 'text-cyan-500' : 'text-slate-500'
+                      className={`step-name ${
+                        step.status === 'active' ? 'step-name-active' : 'step-name-pending'
                       }`}
                     >
                       {step.name}
                     </span>
                   </div>
                   {index < projectSteps.length - 1 && (
-                    <div className="flex-grow h-px mx-4 border-t-2 border-dotted border-slate-300" />
+                    <div className="stepper-divider" />
                   )}
                 </React.Fragment>
               ))}
             </div>
-            <div className="flex items-center space-x-2 pl-8">
-              <div className="text-right p-2 rounded-lg bg-orange-50 border border-orange-200">
-                <p className="text-xs text-gray-500">Design Status</p>
-                <p className="font-semibold text-sm text-orange-600">Design Review</p>
+            <div className="project-actions">
+              <div className="design-status">
+                <p className="design-status-label">Design Status</p>
+                <p className="design-status-value">Design Review</p>
               </div>
-              <Button variant="outline" size="icon" className="border-slate-300">
-                <MessageSquare className="w-5 h-5" />
+              <Button variant="outline" size="icon" className="action-button">
+                <MessageSquare className="action-button-icon" />
               </Button>
-              <Button className="bg-red-600 hover:bg-red-700 text-white px-4">
-                <Share2 className="w-4 h-4 mr-2" />
+              <Button className="primary-action-button">
+                <Share2 className="primary-action-icon" />
                 Actions
               </Button>
             </div>
@@ -263,62 +264,62 @@ export default function FileManager() {
         </div>
         
         {/* Tab Navigation */}
-        <div className="bg-white px-5 border-b border-slate-200">
-          <div className="flex items-center overflow-x-auto">
+        <div className="tab-navigation">
+          <div className="tab-navigation-inner">
             {tabs.map((tab, index) => (
               <React.Fragment key={tab.id}>
                 <button
                   onClick={() => setActiveTab(tab.name)}
-                  className={`flex items-center space-x-2 py-3 px-4 border-b-2 transition-all duration-300 whitespace-nowrap ${
+                  className={`tab-button ${
                     activeTab === tab.name
-                      ? 'border-red-500 text-gray-800'
-                      : 'border-transparent text-slate-600 hover:text-slate-900'
+                      ? 'tab-button-active'
+                      : 'tab-button-inactive'
                   }`}
                 >
-                  <span className="text-sm font-medium">{tab.name}</span>
+                  <span className="tab-name">{tab.name}</span>
                   {tab.count > 0 && (
                     <span
-                      className={`inline-flex items-center justify-center w-5 h-5 text-xs font-bold rounded-full ${
-                        activeTab === tab.name ? 'bg-red-500 text-white' : 'bg-slate-200 text-slate-600'
+                      className={`tab-count ${
+                        activeTab === tab.name ? 'tab-count-active' : 'tab-count-inactive'
                       }`}
                     >
                       {tab.count}
                     </span>
                   )}
                 </button>
-                {index < tabs.length - 1 && <div className="w-px h-4 bg-slate-300 self-center" />}
+                {index < tabs.length - 1 && <div className="tab-divider" />}
               </React.Fragment>
             ))}
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="p-6">
+        <div className="main-content">
           {activeTab === '2D Layout / Adaptation' ?
-          <div className="space-y-6">
+          <div className="files-container">
               {/* Search and Filter Bar */}
-              <div className="bg-white rounded-lg p-4">
-                <div className="grid grid-cols-1 md:grid-cols-6 gap-4 items-end">
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-slate-700 mb-1">
+              <div className="search-filter-bar">
+                <div className="search-filter-grid">
+                  <div className="form-field">
+                    <label className="form-label">
                       Name of File
                     </label>
-                    <div className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <div className="input-container">
+                      <Search className="search-icon" />
                       <Input
                       placeholder="Search Name of File"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-10 bg-slate-100 border-slate-200 focus:border-blue-500 focus:ring-blue-500" />
+                      className="text-input" />
 
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">
+                    <label className="form-label">
                       Type of File
                     </label>
                     <Select defaultValue="">
-                      <SelectTrigger className="bg-slate-100 border-slate-200">
+                      <SelectTrigger className="select-trigger">
                         <SelectValue placeholder="Select" />
                       </SelectTrigger>
                       <SelectContent>
@@ -329,11 +330,11 @@ export default function FileManager() {
                     </Select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">
+                    <label className="form-label">
                       Uploaded by
                     </label>
                     <Select value={selectedUploader} onValueChange={setSelectedUploader}>
-                      <SelectTrigger className="bg-slate-100 border-slate-200">
+                      <SelectTrigger className="select-trigger">
                         <SelectValue placeholder="Select Uploaded by" />
                       </SelectTrigger>
                       <SelectContent>
@@ -347,24 +348,24 @@ export default function FileManager() {
                     </Select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">
+                    <label className="form-label">
                       Uploaded On
                     </label>
-                    <div className="relative">
-                      <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <div className="input-container">
+                      <Calendar className="calendar-icon" />
                       <Input
                       placeholder="Uploaded on"
-                      className="pl-10 bg-slate-100 border-slate-200"
+                      className="text-input"
                       readOnly />
 
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">
+                    <label className="form-label">
                       Status
                     </label>
                     <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-                      <SelectTrigger className="bg-slate-100 border-slate-200">
+                      <SelectTrigger className="select-trigger">
                         <SelectValue placeholder="Status" />
                       </SelectTrigger>
                       <SelectContent>
@@ -381,28 +382,28 @@ export default function FileManager() {
               </div>
 
               {/* File List */}
-              <div className="bg-white rounded-lg overflow-hidden">
+              <div className="file-list-container">
                 {/* Folder Header */}
-                <div className="bg-slate-100 border-b border-slate-200 px-6 py-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
+                <div className="folder-header">
+                  <div className="folder-header-inner">
+                    <div className="folder-info">
                       <Checkbox
                       checked={false}
-                      className="border-slate-400" />
+                      className="folder-checkbox" />
 
-                      <span className="font-semibold text-slate-900">2D Layout / Adaptation</span>
-                      <Badge variant="secondary" className="bg-slate-200 text-slate-600">
+                      <span className="folder-name">2D Layout / Adaptation</span>
+                      <Badge variant="secondary" className="folder-badge">
                         7 Files
                       </Badge>
                     </div>
                     <Button variant="ghost" size="icon">
-                      <MoreHorizontal className="w-4 h-4" />
+                      <MoreHorizontal className="more-button" />
                     </Button>
                   </div>
                 </div>
 
                 {/* File Rows */}
-                <div className="divide-y divide-slate-100">
+                <div className="file-rows-container">
                   {mainFiles.map((file) => {
                   const childFiles = getChildFiles(file.id);
                   const isExpanded = expandedFileId === file.id;
@@ -412,53 +413,53 @@ export default function FileManager() {
                     <div key={file.id}>
                         {/* Main File Row */}
                         <div
-                        className={`hover:bg-slate-50 transition-colors duration-200 ${file.hasVersions ? 'cursor-pointer' : ''}`}
+                        className={`file-row ${file.hasVersions ? 'file-row-clickable' : ''}`}
                         onClick={() => file.hasVersions && toggleFileExpansion(file.id)}>
 
-                          <div className={`px-6 py-3 ${isExpanded ? 'border-l-4 border-red-500' : ''}`}>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-4 flex-1">
+                          <div className={`file-row-inner ${isExpanded ? 'file-row-expanded' : ''}`}>
+                          <div className="file-row-content">
+                            <div className="file-info">
                               <Checkbox
                                 checked={isSelected}
                                 onCheckedChange={() => toggleFileSelection(file.id)}
                                 onClick={(e) => e.stopPropagation()}
-                                className="border-slate-400" />
+                                className="file-checkbox" />
 
 
-                              <div className="flex items-center space-x-3">
-                                <span className="inline-flex items-center justify-center w-8 h-8 rounded bg-red-100 text-red-600 text-xs font-bold">
+                              <div className="file-details">
+                                <span className="file-version">
                                   {file.version}
                                 </span>
-                                <FileText className="w-5 h-5 text-red-500" />
-                                <div className="flex items-center">
-                                  <span className="font-medium text-slate-900">{file.name}</span>
+                                <FileText className="file-icon" />
+                                <div className="file-name-container">
+                                  <span className="file-name">{file.name}</span>
                                   {file.comments > 0 &&
-                                  <div className="ml-2 flex items-center space-x-1 text-sm text-slate-500">
-                                      <MessageSquare className="w-4 h-4" />
+                                  <div className="file-comments">
+                                      <MessageSquare className="file-comment-icon" />
                                       <span>{file.comments}</span>
                                     </div>
                                   }
                                 </div>
                               </div>
                             </div>
-                            <div className="flex items-center space-x-6">
-                              <div className="flex items-center space-x-2">
-                                <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold text-xs">
+                            <div className="file-metadata">
+                              <div className="uploader-info">
+                                <div className="uploader-avatar">
                                   {file.uploader.charAt(0)}
                                 </div>
-                                <span className="text-sm text-slate-600">{file.uploader}</span>
+                                <span className="uploader-name">{file.uploader}</span>
                               </div>
-                              <div className="text-sm text-slate-600">
+                              <div className="upload-date">
                                 {format(file.uploadDate, 'dd MMM yyyy, h:mm a')}
                               </div>
-                              <Badge className={`inline-flex items-center space-x-1 border ${getStatusBadgeColor(file.status)}`}>
+                              <Badge className={`status-badge ${getStatusBadgeColor(file.status)}`}>
                                 {getStatusIcon(file.status)}
                                 <span>{file.status}</span>
                               </Badge>
                               <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                  <Button variant="ghost" size="icon" className="hover:bg-slate-100" onClick={(e) => e.stopPropagation()}>
-                                    <MoreHorizontal className="w-4 h-4" />
+                                  <Button variant="ghost" size="icon" className="file-actions-button" onClick={(e) => e.stopPropagation()}>
+                                    <MoreHorizontal className="more-button" />
                                   </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
@@ -475,66 +476,66 @@ export default function FileManager() {
 
                         {/* Previous Versions */}
                         {isExpanded &&
-                      <div className="bg-slate-50/50 pl-10">
-                            <div className="px-6 py-2 border-y border-slate-200">
-                              <div className="flex items-center justify-between">
-                                <span className="text-sm font-semibold text-slate-600">Previous versions</span>
+                      <div className="previous-versions-container">
+                            <div className="previous-versions-header">
+                              <div className="previous-versions-header-inner">
+                                <span className="previous-versions-title">Previous versions</span>
                                 <Button
                               variant="ghost"
                               size="icon"
                               onClick={(e) => {e.stopPropagation();toggleFileExpansion(file.id);}}
-                              className="text-slate-500 hover:text-slate-700">
+                              className="close-versions-button">
 
-                                  <XCircle className="w-5 h-5" />
+                                  <XCircle className="close-versions-icon" />
                                 </Button>
                               </div>
                             </div>
                             {childFiles.map((childFile) =>
-                        <div key={childFile.id} className={`hover:bg-white transition-colors duration-200 ${
-                        childFile.isHighlighted ? 'border-l-4 border-red-500' : ''}`
+                        <div key={childFile.id} className={`child-file-row ${
+                        childFile.isHighlighted ? 'child-file-row-highlighted' : ''}`
                         }>
-                                <div className="px-6 py-3 ml-8">
-                                <div className="flex items-center justify-between">
-                                  <div className="flex items-center space-x-4 flex-1">
+                                <div className="child-file-row-inner">
+                                <div className="file-row-content">
+                                  <div className="file-info">
                                     <Checkbox
                                   checked={selectedFiles.has(childFile.id)}
                                   onCheckedChange={() => toggleFileSelection(childFile.id)}
-                                  className="border-slate-400" />
+                                  className="file-checkbox" />
 
-                                    <div className="flex items-center space-x-3">
-                                      <span className="inline-flex items-center justify-center w-8 h-8 rounded bg-red-100 text-red-600 text-xs font-bold">
+                                    <div className="file-details">
+                                      <span className="file-version">
                                         {childFile.version}
                                       </span>
-                                      <FileText className="w-5 h-5 text-red-500" />
-                                      <div className="flex items-center">
-                                        <span className="font-medium text-slate-900">{childFile.name}</span>
+                                      <FileText className="file-icon" />
+                                      <div className="file-name-container">
+                                        <span className="file-name">{childFile.name}</span>
                                         {childFile.comments > 0 &&
-                                    <div className="ml-2 flex items-center space-x-1 text-sm text-slate-500">
-                                            <MessageSquare className="w-4 h-4" />
+                                    <div className="file-comments">
+                                            <MessageSquare className="file-comment-icon" />
                                             <span>{childFile.comments}</span>
                                             </div>
                                     }
                                       </div>
                                     </div>
                                   </div>
-                                  <div className="flex items-center space-x-6">
-                                    <div className="flex items-center space-x-2">
-                                       <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold text-xs">
+                                  <div className="file-metadata">
+                                    <div className="uploader-info">
+                                       <div className="uploader-avatar">
                                           {childFile.uploader.charAt(0)}
                                         </div>
-                                      <span className="text-sm text-slate-600">{childFile.uploader}</span>
+                                      <span className="uploader-name">{childFile.uploader}</span>
                                     </div>
-                                    <div className="text-sm text-slate-600">
+                                    <div className="upload-date">
                                       {format(childFile.uploadDate, 'dd MMM yyyy, h:mm a')}
                                     </div>
-                                    <Badge className={`inline-flex items-center space-x-1 border ${getStatusBadgeColor(childFile.status)}`}>
+                                    <Badge className={`status-badge ${getStatusBadgeColor(childFile.status)}`}>
                                       {getStatusIcon(childFile.status)}
                                       <span>{childFile.status}</span>
                                     </Badge>
                                     <DropdownMenu>
                                       <DropdownMenuTrigger asChild>
-                                        <Button variant="ghost" size="icon" className="hover:bg-slate-100">
-                                          <MoreHorizontal className="w-4 h-4" />
+                                        <Button variant="ghost" size="icon" className="file-actions-button">
+                                          <MoreHorizontal className="more-button" />
                                         </Button>
                                       </DropdownMenuTrigger>
                                       <DropdownMenuContent align="end">
@@ -558,11 +559,11 @@ export default function FileManager() {
               </div>
             </div> :
 
-          <div className="bg-white rounded-lg p-12">
-              <div className="text-center">
-                <Folder className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-                <p className="text-lg text-slate-500 mb-2">No files to display in this section</p>
-                <p className="text-sm text-slate-400">
+          <div className="empty-state-container">
+              <div className="empty-state-content">
+                <Folder className="empty-state-icon" />
+                <p className="empty-state-title">No files to display in this section</p>
+                <p className="empty-state-subtitle">
                   Switch to "2D Layout / Adaptation" to view available files
                 </p>
               </div>

@@ -1,0 +1,387 @@
+.file-manager-container {
+  @apply min-h-screen bg-white border-t-4 border-gray-800;
+}
+
+.file-manager-content {
+  @apply max-w-screen-xl mx-auto;
+}
+
+.project-stepper {
+  @apply w-full bg-white border-b border-slate-200 px-6 py-4;
+}
+
+.project-stepper-inner {
+  @apply flex items-center justify-between;
+}
+
+.project-steps {
+  @apply flex items-center w-full;
+}
+
+.step {
+  @apply flex items-center space-x-2;
+}
+
+.step-icon {
+  @apply relative flex items-center justify-center w-5 h-5 rounded-full border transition-all duration-300;
+}
+
+.step-icon-completed {
+  @apply bg-cyan-400 border-cyan-400 shadow-[0_0_8px_theme(colors.cyan.300)];
+}
+
+.step-icon-active {
+  @apply bg-cyan-400 border-cyan-400 shadow-[0_0_8px_theme(colors.cyan.300)];
+}
+
+.step-icon-pending {
+  @apply bg-white border-slate-300;
+}
+
+.step-icon-check {
+  @apply w-3 h-3 text-white;
+}
+
+.step-icon-dot {
+  @apply w-2 h-2 rounded-full;
+}
+
+.step-icon-dot-pending {
+  @apply bg-slate-300;
+}
+
+.step-icon-dot-active {
+  @apply bg-white;
+}
+
+.step-name {
+  @apply font-medium transition-colors duration-300 whitespace-nowrap;
+}
+
+.step-name-active {
+  @apply text-cyan-500;
+}
+
+.step-name-pending {
+  @apply text-slate-500;
+}
+
+.stepper-divider {
+  @apply flex-grow h-px mx-4 border-t-2 border-dotted border-slate-300;
+}
+
+.project-actions {
+  @apply flex items-center space-x-2 pl-8;
+}
+
+.design-status {
+  @apply text-right p-2 rounded-lg bg-orange-50 border border-orange-200;
+}
+
+.design-status-label {
+  @apply text-xs text-gray-500;
+}
+
+.design-status-value {
+  @apply font-semibold text-sm text-orange-600;
+}
+
+.action-button {
+  @apply border-slate-300;
+}
+
+.action-button-icon {
+  @apply w-5 h-5;
+}
+
+.primary-action-button {
+  @apply bg-red-600 hover:bg-red-700 text-white px-4;
+}
+
+.primary-action-icon {
+  @apply w-4 h-4 mr-2;
+}
+
+.tab-navigation {
+  @apply bg-white px-5 border-b border-slate-200;
+}
+
+.tab-navigation-inner {
+  @apply flex items-center overflow-x-auto;
+}
+
+.tab-button {
+  @apply flex items-center space-x-2 py-3 px-4 border-b-2 transition-all duration-300 whitespace-nowrap;
+}
+
+.tab-button-active {
+  @apply border-red-500 text-gray-800;
+}
+
+.tab-button-inactive {
+  @apply border-transparent text-slate-600 hover:text-slate-900;
+}
+
+.tab-name {
+  @apply text-sm font-medium;
+}
+
+.tab-count {
+  @apply inline-flex items-center justify-center w-5 h-5 text-xs font-bold rounded-full;
+}
+
+.tab-count-active {
+  @apply bg-red-500 text-white;
+}
+
+.tab-count-inactive {
+  @apply bg-slate-200 text-slate-600;
+}
+
+.tab-divider {
+  @apply w-px h-4 bg-slate-300 self-center;
+}
+
+.main-content {
+  @apply p-6;
+}
+
+.files-container {
+  @apply space-y-6;
+}
+
+.search-filter-bar {
+  @apply bg-white rounded-lg p-4;
+}
+
+.search-filter-grid {
+  @apply grid grid-cols-1 md:grid-cols-6 gap-4 items-end;
+}
+
+.form-field {
+  @apply md:col-span-2;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-slate-700 mb-1;
+}
+
+.input-container {
+  @apply relative;
+}
+
+.search-icon {
+  @apply absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400;
+}
+
+.text-input {
+  @apply pl-10 bg-slate-100 border-slate-200 focus:border-blue-500 focus:ring-blue-500;
+}
+
+.select-trigger {
+  @apply bg-slate-100 border-slate-200;
+}
+
+.calendar-icon {
+  @apply absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400;
+}
+
+.file-list-container {
+  @apply bg-white rounded-lg overflow-hidden;
+}
+
+.folder-header {
+  @apply bg-slate-100 border-b border-slate-200 px-6 py-3;
+}
+
+.folder-header-inner {
+  @apply flex items-center justify-between;
+}
+
+.folder-info {
+  @apply flex items-center space-x-3;
+}
+
+.folder-checkbox {
+  @apply border-slate-400;
+}
+
+.folder-name {
+  @apply font-semibold text-slate-900;
+}
+
+.folder-badge {
+  @apply bg-slate-200 text-slate-600;
+}
+
+.more-button {
+  @apply w-4 h-4;
+}
+
+.file-rows-container {
+  @apply divide-y divide-slate-100;
+}
+
+.file-row {
+  @apply hover:bg-slate-50 transition-colors duration-200;
+}
+
+.file-row-clickable {
+  @apply cursor-pointer;
+}
+
+.file-row-inner {
+  @apply px-6 py-3;
+}
+
+.file-row-expanded {
+  @apply border-l-4 border-red-500;
+}
+
+.file-row-content {
+  @apply flex items-center justify-between;
+}
+
+.file-info {
+  @apply flex items-center space-x-4 flex-1;
+}
+
+.file-checkbox {
+  @apply border-slate-400;
+}
+
+.file-details {
+  @apply flex items-center space-x-3;
+}
+
+.file-version {
+  @apply inline-flex items-center justify-center w-8 h-8 rounded bg-red-100 text-red-600 text-xs font-bold;
+}
+
+.file-icon {
+  @apply w-5 h-5 text-red-500;
+}
+
+.file-name-container {
+  @apply flex items-center;
+}
+
+.file-name {
+  @apply font-medium text-slate-900;
+}
+
+.file-comments {
+  @apply ml-2 flex items-center space-x-1 text-sm text-slate-500;
+}
+
+.file-comment-icon {
+  @apply w-4 h-4;
+}
+
+.file-metadata {
+  @apply flex items-center space-x-6;
+}
+
+.uploader-info {
+  @apply flex items-center space-x-2;
+}
+
+.uploader-avatar {
+  @apply w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold text-xs;
+}
+
+.uploader-name {
+  @apply text-sm text-slate-600;
+}
+
+.upload-date {
+  @apply text-sm text-slate-600;
+}
+
+.status-badge {
+  @apply inline-flex items-center space-x-1 border;
+}
+
+.status-badge-approved {
+  @apply bg-green-50 text-green-700 border-green-200;
+}
+
+.status-badge-draft {
+  @apply bg-orange-50 text-orange-700 border-orange-200;
+}
+
+.status-badge-rejected {
+  @apply bg-red-50 text-red-700 border-red-200;
+}
+
+.status-badge-reviewed {
+  @apply bg-sky-50 text-sky-700 border-sky-200;
+}
+
+.status-badge-default {
+  @apply bg-gray-50 text-gray-700 border-gray-200;
+}
+
+.status-icon {
+  @apply w-3 h-3;
+}
+
+.file-actions-button {
+  @apply hover:bg-slate-100;
+}
+
+.previous-versions-container {
+  @apply bg-slate-50/50 pl-10;
+}
+
+.previous-versions-header {
+  @apply px-6 py-2 border-y border-slate-200;
+}
+
+.previous-versions-header-inner {
+  @apply flex items-center justify-between;
+}
+
+.previous-versions-title {
+  @apply text-sm font-semibold text-slate-600;
+}
+
+.close-versions-button {
+  @apply text-slate-500 hover:text-slate-700;
+}
+
+.close-versions-icon {
+  @apply w-5 h-5;
+}
+
+.child-file-row {
+  @apply hover:bg-white transition-colors duration-200;
+}
+
+.child-file-row-highlighted {
+  @apply border-l-4 border-red-500;
+}
+
+.child-file-row-inner {
+  @apply px-6 py-3 ml-8;
+}
+
+.empty-state-container {
+  @apply bg-white rounded-lg p-12;
+}
+
+.empty-state-content {
+  @apply text-center;
+}
+
+.empty-state-icon {
+  @apply w-16 h-16 text-slate-300 mx-auto mb-4;
+}
+
+.empty-state-title {
+  @apply text-lg text-slate-500 mb-2;
+}
+
+.empty-state-subtitle {
+  @apply text-sm text-slate-400;
+}
